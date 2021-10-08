@@ -22,6 +22,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { AddScheduleComponent } from './add-schedule/add-schedule.component';
 import { EditScheduleComponent } from './edit-schedule/edit-schedule.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
 
 import { ChartModule } from 'primeng/chart';
 import {TabViewModule} from 'primeng/tabview';
@@ -34,7 +35,9 @@ import { PatientModifyComponent } from './patient-modify/patient-modify.componen
 import { SendNotesComponent } from './send-notes/send-notes.component';
 import {DialogModule} from 'primeng/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-
+import { MatIconModule } from "@angular/material/icon";
+import { ChartsModule } from 'ng2-charts';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   declarations: [
@@ -73,7 +76,12 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatRadioModule,
     DialogModule,
     MatCheckboxModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatCardModule,
+    MatIconModule,
+    ChartsModule,
+    FullCalendarModule
+
   ]
 
 })

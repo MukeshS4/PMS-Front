@@ -60,12 +60,12 @@ export class SendNotesComponent implements OnInit {
       this.notesService.createNote(this.note).subscribe((data) => {
         
        });
-
+       alert('Send Notes Successfully');
     }
     else{
-      alert('Please Fill mandatory Fields')
+      alert('Please Fill mandatory Fields');
     }
-    this.router.navigateByUrl('/user/physicianinbox');
+    this.router.navigateByUrl('/user/inbox');
     
   }
   

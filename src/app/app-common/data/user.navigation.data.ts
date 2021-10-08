@@ -4,7 +4,7 @@ export const userSideNavigationItem: SideNavigationItem[] = [
     {
         icon: 'pi pi-fw pi-th-large',
         label: 'Dashboard',
-        routerLink: '/user/',
+        routerLink: '/user',
     },
     {
         icon: 'pi pi-fw pi-inbox',
@@ -13,7 +13,7 @@ export const userSideNavigationItem: SideNavigationItem[] = [
             {
                 icon: 'pi pi-fw pi-user',
                 label: 'Appointment',
-                routerLink: '/user/physicianinbox',
+                routerLink: '/user/inbox',
             },
         ]
     },
@@ -24,17 +24,12 @@ export const userSideNavigationItem: SideNavigationItem[] = [
             {
                 icon: 'pi pi-fw pi-plus',
                 label: 'Add Appointment',
-                routerLink: '/user/patientmodify/addschedule',
-            },
-            {
-                icon: 'pi pi-fw pi-pencil',
-                label: 'Edit Appointment',
-                routerLink: '/user/patientmodify/editschedule',
+                routerLink: '/user/modifyappointment/addschedule',
             },
             {
                 icon: 'pi pi-fw pi-trash',
-                label: 'Delete Appointment',
-                routerLink: '/user/patientmodify',
+                label: 'Modify Appointment',
+                routerLink: '/user/modifyappointment',
             },
         ]
     },

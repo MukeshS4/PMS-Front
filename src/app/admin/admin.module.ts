@@ -19,6 +19,7 @@ import { EditUserComponent } from './edit-user/edit-user.component';
 import { AdminService } from './service/admin.service';
 import {DialogModule} from 'primeng/dialog';
 import { MessagesModule } from 'primeng/messages';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { MessagesModule } from 'primeng/messages';
     AdminRoutingModule,
     ChartModule,
     TabViewModule,
+    ProgressSpinnerModule,
     ReactiveFormsModule,
     TableModule,
     DropdownModule,

@@ -113,7 +113,7 @@ export class Employee{
     title:string;
     firstName:string;
     lastName:string;
-    emailId:string;
+    public emailId:string;
     dateOfBirth:string;
     role:string;
     employeeId:string;

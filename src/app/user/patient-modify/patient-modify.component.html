@@ -4,8 +4,8 @@
   <p-table
     #dt
     [value]="listOfAppointment"
-    dataKey="id"
-    [rows]="10"
+    dataKey="physicianName"
+    [rows]="20"
     [showCurrentPageReport]="true"
     [rowsPerPageOptions]="[10, 25, 50]"
     [loading]="loading"
@@ -129,7 +129,7 @@
         </th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-data>
+    <ng-template pTemplate="body" let-data >
       <tr>
         <td>
           {{ data.employee.firstName }}
@@ -158,11 +158,11 @@
         <td>
           <button
             class="btn btn-primary btn-cus-link1"
-            [routerLink]="['editschedule']"
+            (click)="onEdit(data)"
           >
             Edit
           </button> |
-          <button class="btn btn-danger btn-cus-link1" (click)="onDelete()">
+          <button class="btn btn-danger btn-cus-link1" (click)="onDelete(data)">
             Delete
           </button>
         </td>
@@ -174,17 +174,16 @@
       </tr>
     </ng-template>
   </p-table>
-  <p-dialog header="confirmation" [(visible)]="displayDialog" [modal]="true" [style]="{width: '50vw'}" [responsive]="true">
+  <p-dialog header="Cancel Appointment" [(visible)]="displayDialog" [modal]="true" [style]="{width: '50vw'}" [responsive]="true">
     <div>
       <i class="pi-pi-info-circle" style="vertical-align: sub; font-size: 1.5cm;"></i>
-      Please specify the reason to Delete:- <span class="nodeColorRed"></span>
+      Please specify the reason to Cancel Appointment:- <span class="nodeColorRed"></span>
     </div>
     <div>
-      <input type="text" class="margin-top-5"  pInputText/>
+      <input type="text" #rr [(ngModel)]="reason" [style]="{width:'70%'}" pInputText />
     </div>
     <p-footer>
-      <button pButton type="button" label="ok" 
-      ></button>
+      <button pButton type="button" label="ok" (click)="cancelAppointment(rr)"></button>
       <button pButton type="button" lable="cancel" 
       class="margin-left-10" >Cancel</button>
     </p-footer>

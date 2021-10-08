@@ -10,3 +10,8 @@ mat-form-field{
   h1{
       margin-left: 11cm;
   }
+
+  input.ng-invalid.ng-touched,
+  textarea.ng-invalid.ng-touched{
+    border: 1px solid red;
+  }

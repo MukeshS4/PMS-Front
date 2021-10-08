@@ -9,28 +9,54 @@ import { AdminService } from '../service/admin.service';
   styleUrls: ['./add-user.component.css']
 })
 export class AddUserComponent implements OnInit {
-
+  isAdmin = false;
+  invalidEmailAddress = false;
+  isLoading = false;
+  idUnavailable = false;
+  prepopEmpId = [''];
   successModal: boolean = false;
   errorModal: boolean = false;
-  userRegisterForm : FormGroup;
+  userExistModal: boolean = false;
+  userRegisterForm: FormGroup;
   sideNavigationdata: SideNavigationItem[] = sideNavigationItem;
   constructor(
     private fb: FormBuilder,
-    private adminService : AdminService,
-  ) { this.userRegisterForm = this.fb.group({
-    title:['',[Validators.required]],
-    firstName:['',[Validators.required,Validators.minLength(3)]],
-    lastName:['',[Validators.required,Validators.minLength(3)]],
-    emailId:['',[Validators.required,Validators.email]],
-    dateOfBirth:[''],
-    role:['',[Validators.required]],
-    employeeId:['',[Validators.required, Validators.pattern("^(?=.*[A-Z])(?=.*[0-9]).{5}$")]],
-  })}
-
-  ngOnInit(): void {
+    private adminService: AdminService,
+  ) {
+    this.userRegisterForm = this.fb.group({
+      title: ['', [Validators.required]],
+      firstName: ['', [Validators.required, Validators.minLength(3)]],
+      lastName: ['', [Validators.required, Validators.minLength(3)]],
+      emailId: ['', [Validators.required, Validators.email]],
+      dateOfBirth: [''],
+      role: ['', [Validators.required]],
+      employeeId: ['', [Validators.required, Validators.pattern("^(?=.*[A-Z])(?=.*[0-9]).{6}$")]],
+    })
   }
 
-  onUserSubmit(){
+  ngOnInit(): void {
+    this.getAvailableEmpId();
+    this.isLoading = false;
+  }
+
+  onChangeEvent(event: any) {
+    this.idUnavailable = !this.prepopEmpId.includes(event.target.value);
+  }
+
+  getAvailableEmpId() {
+    this.adminService.getEmpId().subscribe(
+      data => {
+        if (data !== null) {
+          console.log(data);
+          this.prepopEmpId = data;
+        }
+      }, error => {
+        this.prepopEmpId = ["No Recods Found"];
+      }
+    )
+  }
+  onUserSubmit() {
+    this.isLoading = true;
     const RegisterData = {
       title: this.userRegisterForm.controls.title.value,
       firstName: this.userRegisterForm.controls.firstName.value,
@@ -41,14 +67,32 @@ export class AddUserComponent implements OnInit {
       employeeId: this.userRegisterForm.controls.employeeId.value,
     }
     this.adminService.userRegistration(RegisterData).subscribe(
-      data=>{
-        if(data !== null){
-            this.successModal = true;
-            this.userRegisterForm.reset();
+      data => {
+        if (data !== null) {
+          this.successModal = true;
+          this.userRegisterForm.reset();
+          this.isLoading = false;
         }
-      },error => {
-        console.log("error occured inside admin");
-        this.errorModal = true;
+      }, error => {
+        console.log(error);
+        if (error.error.message === "User is already Registered") {
+          this.userExistModal = true;
+          this.isLoading = false;
+          this.userRegisterForm.reset();
+        } else if (error.error.message === "Provided Email Id in incorrect or invalid") {
+          this.invalidEmailAddress = true;
+          this.isLoading = false;
+          this.userRegisterForm.reset();
+        }
+        else if (error.error.message === "Only a single admin can persist") {
+          this.isAdmin = true;
+          this.isLoading = false;
+          this.userRegisterForm.reset();
+        }
+        else {
+          this.errorModal = true;
+          this.isLoading = false;
+        }
       }
     );
   }
@@ -63,7 +107,7 @@ export class AddUserComponent implements OnInit {
 
   get titleControlInvalid() {
     return (
-      this.titleControl.touched && (this.fNameControl.hasError('required') )
+      this.titleControl.touched && (this.fNameControl.hasError('required'))
     );
   }
 
@@ -119,7 +163,7 @@ export class AddUserComponent implements OnInit {
 
   get roleControlInvalid() {
     return (
-      this.roleControl.touched && (this.emailControl.hasError('required') )
+      this.roleControl.touched && (this.emailControl.hasError('required'))
     );
   }
 
@@ -129,13 +173,11 @@ export class AddUserComponent implements OnInit {
   }
 
   get passwordControlInvalid() {
-    return (
-      this.employeeIdControl.touched && (this.employeeIdControl.hasError('required') || this.employeeIdControl.hasError('pattern'))
-    );
+    return this.employeeIdControl.hasError('pattern')
   }
 
   get employeeIdControlValid() {
-    return this.employeeIdControl.touched && !this.passwordControlInvalid;
+    return !this.passwordControlInvalid;
   }
 
 

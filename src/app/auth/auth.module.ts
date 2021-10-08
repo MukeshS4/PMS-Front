@@ -7,6 +7,9 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {DialogModule} from 'primeng/dialog';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthHttpInterceptor } from './service/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -19,6 +22,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    DialogModule,
     AuthRoutingModule,
     ConfirmDialogModule
   ],

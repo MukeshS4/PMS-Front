@@ -39,6 +39,9 @@
                                     <span class="invalid" *ngIf='passwordControl.hasError("pattern")'>
                                         *Password is not valid</span>
                                 </div>
+                                <div class="invalid" *ngIf="incorrectPassword">
+                                    Incorrect password
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="form-check"><input class="form-input-check" id="rememberMe"
@@ -50,7 +53,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 form-link">
-                                    <a [routerLink]="['forgot-password']"
+                                    <a [routerLink]="['auth/forgot-password']"
                                         routerLinkActive="router-link-active">Forgot</a>
                                     <a [routerLink]="['auth/change-password']" routerLinkActive="router-link-active">/
                                         Change password</a>
@@ -75,3 +78,9 @@
         </div>
     </div>
 </div>
+<p-dialog header="Already in Lock" [(visible)]="accountLocked">
+    <i class="pi pi-exclamation-triangle"></i> Your Account is Locked! Contact Admin to Unlock
+</p-dialog>
+<p-dialog header="Locked" [(visible)]="accountLockedNotify">
+    <i class="pi pi-exclamation-triangle"></i> Your Account is Locked due to 3 unseccessful entry! Contact Admin to Unlock
+</p-dialog>

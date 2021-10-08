@@ -3,21 +3,12 @@
 <div>
   <h1>Add Appointment Schedule</h1>
 </div>
-<form [formGroup]="addSchedule" (ngSubmit)="save()">
+<form [formGroup]="form" (ngSubmit)="save()">
   <div class="add">
     <div>
       <mat-form-field appearance="fill">
         <mat-label>Physician Name</mat-label>
         <mat-select formControlName="employee" (selectionChange)="showPhysicianId($event.value)">
-          <!-- <span
-            class="text-danger"
-            *ngIf="
-              (submitted) &&
-              registerFormControl.physicianName.errors?.required
-            "
-          >
-            “Last name cannot be empty.”
-          </span> -->
           <mat-option
             *ngFor="let data of listOfPhysician"
             [value]="data"
@@ -35,43 +26,17 @@
     <div>
       <mat-form-field appearance="fill">
         <mat-label>Date</mat-label>
-        <mat-select formCotrolname=date
-      >
-        <!-- <span
-          class="text-danger"
-          *ngIf="
-            (registerFormControl.date.touched || submitted) &&
-            registerFormControl.date.errors?.required
-          "
-        >
-          “Last name cannot be empty.”
-        </span> -->
-      </mat-select>
-        <input
-          matInput
-          [matDatepicker]="picker"
-          [min]="todayDate"
-          (dateInput)="appointmentDateSelectEvent($event)"
-        />
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
+      <input matInput [matDatepicker]="picker" [min]="todayDate"
+      placeholder="Choose a date" (dateInput)="appointmentDateSelectEvent($event)">
+      <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
     </div>
     <div>
       <mat-form-field appearance="fill">
         <mat-label>Appointment Time Slot</mat-label>
         <mat-select formControlName="time"
-        >
-          <!-- <span
-            class="text-danger"
-            *ngIf="
-              (registerFormControl.timeSlot.touched || submitted) &&
-              registerFormControl.timeSlot.errors?.required
-            "
-          >
-            “Last name cannot be empty.”
-          </span> -->
-          <mat-option *ngFor="let data of listOfTimeSlot" [value]="data">{{
+        ><mat-option *ngFor="let data of listOfTimeSlot" [value]="data">{{
             data
           }}</mat-option>
         </mat-select>
@@ -126,12 +91,9 @@
           </mat-form-field>
         </div>
       </div>
-      <div>
-        {{ todayDate | date: "medium" }}
-      </div>
 
       <div>
-        <button mat-raised-button color="primary">Save</button>
+        <button mat-raised-button color="primary" [disabled]="false">Save</button>
       </div>
     </div>
   </div>

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { AuthService } from 'src/app/auth/service/auth.service';
 import { sideNavigationItem } from '../../data/navigation.data';
 @Component({
   selector: 'app-header',
@@ -7,8 +8,10 @@ import { sideNavigationItem } from '../../data/navigation.data';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  constructor() { }
-
+  constructor(
+    private authService : AuthService
+  ) { }
+  userName: any;
   display!: boolean;
   useritems!: MenuItem[];
   headerItems!: MenuItem[];
@@ -16,9 +19,10 @@ export class HeaderComponent implements OnInit {
   @Input() navigationitems: any;
   ngOnInit() {
     //make a menuitem for notification as below
+    this.userName = localStorage.getItem('username');
     this.useritems = [
       {
-        label: 'Agastin Raj',
+        label: this.userName,
         icon: 'pi pi-fw pi-id-card',
         routerLink: ['/user/info'],
         routerLinkActiveOptions: {
@@ -29,10 +33,11 @@ export class HeaderComponent implements OnInit {
       {
         label: 'Logout',
         icon: 'pi pi-fw pi-power-off',
-        routerLink: ['/logout'],
-        routerLinkActiveOptions: {
-          exact: true
-        },
+        command: (event: Event)=>{ this.authService.logout()},
+        // routerLink: ['/logout'],
+        // routerLinkActiveOptions: {
+        //   exact: true
+        // },
         styleClass: 'menucustom'
       }
     ]

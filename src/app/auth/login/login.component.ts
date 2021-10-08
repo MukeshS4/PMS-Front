@@ -10,6 +10,10 @@ import { AuthService } from '../service/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  incorrectPassword = false;
+  accountLocked = false;
+  accountLockedNotify = false;
+
   loginFailedCount = 0;
   role: string = '';
   loginForm: FormGroup;
@@ -22,44 +26,64 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.fb.group({
       emailId: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
-        // Validators.pattern("^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{8,20}$")]],
+      // Validators.pattern("^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{8,20}$")]],
       checkbox: false,
     });
   }
   ngOnInit(): void {
+
   }
 
-  checklogin(){
+  checklogin() {
     const loginData = {
       username: this.loginForm.controls.emailId.value,
       password: this.loginForm.controls.password.value,
     }
-    this.authService.authenticate(loginData.username, loginData.password).subscribe(
-      data=>{
-        this.loginFailedCount=0;
-        if(data.role === "Admin"){
-          this.router.navigate(['/admin']);
-        }
-        else if(data.role === "Physician" || data.role === "Nurse")
-        {
-          this.router.navigate(['/user']);
-        }
-        else{
-          this.router.navigate(['/patient']);
-        }
-      },error => {
-        this.loginFailedCount = this.loginFailedCount + 1;
-      }
-    );
-    if(this.loginFailedCount>3){
-      this.authService.lockAccount(loginData.username).subscribe(
-        data=>{
-          this.loginFailedCount=0;
-        },error => {
-          console.log("inside locked account");
+    if (loginData.password === 'Password123') {
+      this.router.navigate(['/auth/change-password']);
+    }
+    else {
+      this.authService.authenticate(loginData.username, loginData.password).subscribe(
+        data => {
+          this.loginFailedCount = 0;
+          if (loginData.password === 'Password123') {
+            this.router.navigate(['/auth/change-password']);
+          } else {
+            if (data.role === "Admin") {
+              this.router.navigate(['/admin']);
+            }
+            else if (data.role === "Physician" || data.role === "Nurse" || data.role === "physician") {
+              this.router.navigate(['/user']);
+            }
+            else {
+              this.router.navigate(['/patient']);
+            }
+          }
+
+        }, error => {
+          console.log("authenticate error", error);
+          if (error.error.message === "User's Account is Locked") {
+            this.accountLocked = true;
+            this.loginForm.reset();
+          }
+          else if (error.error.message === "Unauthorized") {
+            this.incorrectPassword = true;
+            this.loginFailedCount = this.loginFailedCount + 1;
+            if (this.loginFailedCount > 3) {
+              this.authService.lockAccount(loginData.username).subscribe(
+                data => {
+                  this.loginFailedCount = 0;
+                  this.accountLockedNotify = true;
+                }, error => {
+                  console.log("inside locked account", error);
+                }
+              );
+            }
+          }
         }
       );
     }
+
   }
 
   get emailControl() {

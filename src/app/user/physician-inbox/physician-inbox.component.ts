@@ -8,68 +8,68 @@ import { InboxService } from './inbox.service';
 
 
 
-export interface UsersData {
-  appointmentId: string;
-  appointmentDescription: string;
-  date: string;
-  time: string;
-  patientInfo: string;
-  editHistory: string;
-}
+// export interface UsersData {
+//   appointmentId: string;
+//   appointmentDescription: string;
+//   date: string;
+//   time: string;
+//   patientInfo: string;
+//   editHistory: string;
+// }
 
-const ELEMENT_DATA: UserPatientModify[] = [
-  {
-    appointmentId: 1,
-    patient: { patientId: '1', name: 'Rekha', city: 'Noida', country: 'India' },
-    description: 'headache and body pain',
-    date: '1999-09-14',
-    time: '23:10:45',
-    employee: {
-      title: 'dr',
-      firstName: 'mukesh',
-      lastName: 'singh',
-      emailId: 'muesh@gmail.com',
-      dateOfBirth: '2021-09-14',
-      role: 'physician',
-      employeeId: 'E01',
-    },
-    status: 'SCHEDULED',
-  },
-  {
-    appointmentId: 2,
-    patient: { patientId: '1', name: 'Rekha', city: 'Noida', country: 'India' },
-    description: 'headache and body pain',
-    date: '1999-09-14',
-    time: '23:10:45',
-    employee: {
-      title: 'dr',
-      firstName: 'mukesh',
-      lastName: 'singh',
-      emailId: 'muesh@gmail.com',
-      dateOfBirth: '2021-09-14',
-      role: 'physician',
-      employeeId: 'E01',
-    },
-    status: 'SCHEDULED',
-  },
-  {
-    appointmentId: 3,
-    patient: { patientId: '1', name: 'Rekha', city: 'Noida', country: 'India' },
-    description: 'headache and body pain',
-    date: '1999-09-14',
-    time: '23:10:45',
-    employee: {
-      title: 'dr',
-      firstName: 'mukesh',
-      lastName: 'singh',
-      emailId: 'muesh@gmail.com',
-      dateOfBirth: '2021-09-14',
-      role: 'physician',
-      employeeId: 'E01',
-    },
-    status: 'SCHEDULED',
-  }
-];
+// const ELEMENT_DATA: UserPatientModify[] = [
+//   {
+//     appointmentId: 1,
+//     patient: { patientId: '1', name: 'Rekha', city: 'Noida', country: 'India' },
+//     description: 'headache and body pain',
+//     date: '1999-09-14',
+//     time: '23:10:45',
+//     employee: {
+//       title: 'dr',
+//       firstName: 'mukesh',
+//       lastName: 'singh',
+//       emailId: 'muesh@gmail.com',
+//       dateOfBirth: '2021-09-14',
+//       role: 'physician',
+//       employeeId: 'E01',
+//     },
+//     status: 'SCHEDULED',
+//   },
+//   {
+//     appointmentId: 2,
+//     patient: { patientId: '1', name: 'Rekha', city: 'Noida', country: 'India' },
+//     description: 'headache and body pain',
+//     date: '1999-09-14',
+//     time: '23:10:45',
+//     employee: {
+//       title: 'dr',
+//       firstName: 'mukesh',
+//       lastName: 'singh',
+//       emailId: 'muesh@gmail.com',
+//       dateOfBirth: '2021-09-14',
+//       role: 'physician',
+//       employeeId: 'E01',
+//     },
+//     status: 'SCHEDULED',
+//   },
+//   {
+//     appointmentId: 3,
+//     patient: { patientId: '1', name: 'Rekha', city: 'Noida', country: 'India' },
+//     description: 'headache and body pain',
+//     date: '1999-09-14',
+//     time: '23:10:45',
+//     employee: {
+//       title: 'dr',
+//       firstName: 'mukesh',
+//       lastName: 'singh',
+//       emailId: 'muesh@gmail.com',
+//       dateOfBirth: '2021-09-14',
+//       role: 'physician',
+//       employeeId: 'E01',
+//     },
+//     status: 'SCHEDULED',
+//   }
+// ];
 
 @Component({
   selector: 'app-physician-inbox',
@@ -83,7 +83,7 @@ export class PhysicianInboxComponent implements OnInit {
 
   userSideNavigationdata : SideNavigationItem[] = userSideNavigationItem;
 
-  displayedColumns: string[] = ['appointmentId', 'appointmentDescription', 'date', 'time', 'patientInfo', 'editHistory'];
+  displayedColumns: string[] = ['appointmentId', 'appointmentDescription', 'date', 'time', 'patientInfo', 'editHistory', 'physicianName'];
   
   @ViewChild(MatTable, { static: true })
   table: MatTable<any> | undefined 

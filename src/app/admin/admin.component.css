@@ -45,7 +45,7 @@
 }
 .tabview-header{
     width: 100%;
-    text-align: center;
+    /* text-align: center; */
 }
 :host ::ng-deep .p-tabview-nav{
     /* text-align: center; */

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Table } from 'primeng/table';
 import { userSideNavigationItem } from 'src/app/app-common/data/user.navigation.data';
-//import { patientData } from 'src/app/app-common/data/user.patient.modify';
 import { UserPatientModify, SideNavigationItem } from 'src/app/app-common/models';
 import {PatientModifyService} from 'src/app/user/patient-modify.service';
 
@@ -14,27 +14,36 @@ export class PatientModifyComponent implements OnInit {
 
   userSideNavigationdata: SideNavigationItem[] = userSideNavigationItem;
 
-  //patientData: UserPatientModify[] = patientData;
   statuses:any;
   loading: boolean=false;
   displayDialog:boolean=false;
-  confirmText:string="";
+  reason:string="";
+  appointment:any;
   
 
 //start of model attribute definition
 
-  constructor(private patientModify:PatientModifyService) { }
+  constructor(private appointmentService:PatientModifyService,private router:Router) { }
   listOfAppointment: UserPatientModify[]=[];
   ngOnInit(): void {
-    this.confirmText="";
-     this.listOfAppointment= this.patientModify.getAllAppointment();
-  console.log(this.listOfAppointment);
+    this.listOfAppointment= this.appointmentService.getAllAppointment();
   }
-  onDelete(){
-    this.confirmText="";
+  onDelete(appointment:UserPatientModify){
     this.displayDialog=true;
-    //console.log(item);
-    //this.userData = this.userData.filter((obj: any) => obj !== item);
+    this.appointment=appointment;
+  }
+
+  cancelAppointment(rr:any){
+    this.reason=rr.value;
+    this.displayDialog=false;
+    this.appointmentService.cancelAppointment(this.appointment.appointmentId,this.reason).subscribe((data) => { 
+      //console.log(data);     
+    });
+    this.router.navigateByUrl('/user/modifyappointment');
+  }
+
+  onEdit(appointment:UserPatientModify){
+    this.router.navigate(['user/modifyappointment/editschedule',appointment.appointmentId]);
   }
   clear(table: Table) {
     table.clear();

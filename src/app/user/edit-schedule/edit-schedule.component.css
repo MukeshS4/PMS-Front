@@ -1,12 +1,16 @@
-.add{
-    margin-left: 8cm;
-}
+
 form{
-    width: 100%;
+    margin-left: 25%;
+    margin-right:25%;
+    width: 70%;
 }
 mat-form-field{
     width: 50%;
   }
   h1{
-      margin-left: 11cm;
+    margin-left: 5%;
+    margin-right:54%;
+    margin-top: 3%;
+    text-size-adjust: 24;
+    background-color: darkgray;
   }

@@ -1,10 +1,17 @@
-mat-form-field{
-    width: 50%;
-}
-.input{
+ mat-form-field{
+    width: 300%;
+}  
+/* .input{
     margin-top: 2cm;
     margin-left: 8cm;
 }
 button{
     margin-left: 6cm;
+} */
+.add-card{
+}
+.input{
+    margin-top: 7%;
+    margin-right: 20cm;
+    margin-bottom: 5%;
 }

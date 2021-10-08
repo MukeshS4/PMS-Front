@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import {ConfirmationService} from 'primeng/api';
+import { Router } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
 import { AuthService } from '../service/auth.service';
 
 @Component({
@@ -9,12 +10,14 @@ import { AuthService } from '../service/auth.service';
   styleUrls: ['./change-password.component.css']
 })
 export class ChangePasswordComponent implements OnInit {
-
+  samePassword = false;
+  passwordMismatch = false;
+  passwordChanged = false;
   changePasswordForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
-    // private confirmationService: ConfirmationService,
+    private router: Router,
     private authService: AuthService
   ) {
     this.changePasswordForm = this.fb.group({
@@ -28,40 +31,36 @@ export class ChangePasswordComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  submitChangePassword(){
-      const passwordData = {
-        username: this.changePasswordForm.controls.username.value,
-        oldPassword: this.changePasswordForm.controls.oldPassword.value,
-        newPassword: this.changePasswordForm.controls.newPassword.value,
-        confirmNewPassword: this.changePasswordForm.controls.confirmNewPassword.value
-      }
-      this.authService.changePassword(passwordData).subscribe(
-        data=>{
-          console.log("inside login service:", data);
-        },error => {
-          console.log("error occured");
-        }
-      );
-      // this.authService.changePassword(passwordData).pipe(first()).subscribe(data => {
-      //   console.log("inside change password service:", data);
-      // }, error => {
-      //   console.log("error occurred");
-      // });
+  navigate() {
+    this.router.navigate(['']);
   }
 
-//   confirm1() {
-//     this.confirmationService.confirm({
-//         message: 'Are you sure that you want to proceed?',
-//         header: 'Confirmation',
-//         icon: 'pi pi-exclamation-triangle',
-//         accept: () => {
-//             this.msgs = [{severity:'info', summary:'Confirmed', detail:'You have accepted'}];
-//         },
-//         reject: () => {
-//             this.msgs = [{severity:'info', summary:'Rejected', detail:'You have rejected'}];
-//         }
-//     });
-// }
+  submitChangePassword() {
+    const passwordData = {
+      username: this.changePasswordForm.controls.username.value,
+      oldPassword: this.changePasswordForm.controls.oldPassword.value,
+      newPassword: this.changePasswordForm.controls.newPassword.value,
+      confirmNewPassword: this.changePasswordForm.controls.confirmNewPassword.value
+    }
+    this.authService.changePassword(passwordData).subscribe(
+      data => {
+        this.passwordChanged = true;
+        this.changePasswordForm.reset();
+        console.log("inside login service:", data);
+      }, error => {
+        if (error.error.message === "New Password is the same as Old Password") {
+          this.samePassword = true;
+          this.changePasswordForm.reset();
+        } else if (error.error.message === "Old Password doesn't match") {
+          this.passwordMismatch = true;
+          this.changePasswordForm.reset();
+        }
+        else {
+
+        }
+      }
+    );
+  }
 
   get usernameControl() {
     return this.changePasswordForm.get('username') as FormControl;
@@ -97,7 +96,7 @@ export class ChangePasswordComponent implements OnInit {
 
   get confirmPasswordControlInvalid() {
     return (
-      this.confirmPasswordControl.touched && (this.passwordControl.hasError('required') || this.passwordControl.hasError('pattern')) || this.changePasswordForm.get('confirmNewPassword')===this.changePasswordForm.get('newPassword')
+      this.confirmPasswordControl.touched && (this.passwordControl.hasError('required') || this.passwordControl.hasError('pattern')) || this.changePasswordForm.get('confirmNewPassword') === this.changePasswordForm.get('newPassword')
     );
   }
 

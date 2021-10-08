@@ -1,3 +1,63 @@
-<app-header [navigationitems]= userSideNavigationdata></app-header>
+<app-header [navigationitems]="userSideNavigationdata"></app-header>
 
-<app-footer></app-footer>
+<div id="dashboard">
+<div id="detail">
+<mat-card class="physician-card" >
+    <mat-card-title-group>
+        <mat-card-title>Hi {{ username}},</mat-card-title>
+        <mat-card-subtitle *ngIf='physicianFlag'>The practice of medicine is an art,
+           not a trade; a calling, not a business; a calling in which
+            your heart will be exercised equally with your head. Often 
+            the best part of your work will have nothing to do with potions 
+            and powders, but with the exercise of an influence of the strong upon 
+            the weak, of the righteous upon the wicked, of the wise upon the foolish.
+          </mat-card-subtitle>
+          <mat-card-subtitle *ngIf='!physicianFlag'>The practice of medicine is an art,
+            not a trade; a calling, not a business; a calling in which
+             your heart will be exercised equally with your head. Often 
+             the best part of your work will have nothing to do with potions 
+             and powders, but with the exercise of an influence of the strong upon 
+             the weak, of the righteous upon the wicked, of the wise upon the foolish.
+           </mat-card-subtitle>
+        <img mat-card-md-image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFw7whz6NPdSiKm1vNSli0q_nZORBXChwDog&usqp=CAU" >
+      </mat-card-title-group>
+</mat-card>
+<div id="appointment">
+<mat-card class="total-card">
+    <mat-card-title-group>
+        <mat-card-title>Total Appointment</mat-card-title>
+        <mat-card-subtitle id="total">1992</mat-card-subtitle>
+      </mat-card-title-group>
+  </mat-card>
+  <mat-card class="today-card" >
+    <mat-card-title-group>
+        <mat-card-title>Today Appointment</mat-card-title>
+        <mat-card-subtitle id="today">1992</mat-card-subtitle>
+      </mat-card-title-group>
+  </mat-card>
+</div>
+  <mat-card class="chart-card">
+    <mat-card-title-group>
+        <canvas baseChart
+            [datasets]="chart_Data"
+            [labels]="chart_Labels"
+            [options]="chart_Options"
+            [plugins]="chart_Plugins"
+            [legend]="chart_Legend"
+            [chartType]="chart_Type"
+            [colors]="donutColors">
+    </canvas>
+      </mat-card-title-group>
+</mat-card>
+</div>
+<div class="calendar">
+    <mat-card class="calendar-card">
+        <mat-card-title-group>
+            <full-calendar [options]="calendarOptions" style="width: 100%; height: 100%;"></full-calendar>
+          </mat-card-title-group>
+      </mat-card>
+</div>
+</div>
+
+  <app-footer></app-footer>
+

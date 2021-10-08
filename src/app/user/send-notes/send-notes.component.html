@@ -1,5 +1,7 @@
 <app-header [navigationitems]="userSideNavigationdata"></app-header>
 
+<mat-card class="add-card">
+  <mat-card-title-group>
 <form [formGroup]="sendNotes" (ngSubmit)="onSend()">
   <div class="input">
     <div>
@@ -86,4 +88,6 @@
     </div>
   </div>
 </form>
+</mat-card-title-group>
+</mat-card>
 <app-footer></app-footer>

@@ -10,11 +10,11 @@ import { UserComponent } from './user.component';
 
 const routes: Routes = [
   { path: '', component: UserComponent },
-  { path: 'physicianinbox', component: PhysicianInboxComponent },
-  { path: 'patientmodify/addschedule', component: AddScheduleComponent },
-  { path: 'patientmodify/editschedule', component: EditScheduleComponent },
-  { path: 'patientmodify', component: PatientModifyComponent },
-  { path: 'physicianinbox/sendnotes', component: SendNotesComponent },
+  { path: 'inbox', component: PhysicianInboxComponent },
+  { path: 'modifyappointment/addschedule', component: AddScheduleComponent },
+  { path: 'modifyappointment/editschedule/:appointmentId', component: EditScheduleComponent },
+  { path: 'modifyappointment', component: PatientModifyComponent },
+  { path: 'inbox/sendnotes', component: SendNotesComponent },
 ];
 
 @NgModule({

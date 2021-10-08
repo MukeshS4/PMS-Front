@@ -1,7 +1,7 @@
 <app-header [navigationitems]="userSideNavigationdata"></app-header>
 <!-- app.component.html -->
 <mat-tab-group mat-stretch-tabs class="">
-  <mat-tab label="Upcoming Appointment">
+  <mat-tab label="UPCOMING APPOINTMENT">
     <div class="container text-center">
       <table
         mat-table
@@ -14,7 +14,7 @@
 
         <!-- Id Column -->
         <ng-container matColumnDef="appointmentId">
-          <th mat-header-cell *matHeaderCellDef>Appointment Id</th>
+          <th mat-header-cell *matHeaderCellDef>APPOINTMENT ID</th>
           <td mat-cell *matCellDef="let element">
             {{ element.appointmentId }}
           </td>
@@ -22,7 +22,7 @@
 
         <!-- Name Column -->
         <ng-container matColumnDef="appointmentDescription">
-          <th mat-header-cell *matHeaderCellDef>Appointment Description</th>
+          <th mat-header-cell *matHeaderCellDef>APPOINTMENT DESCRIPTION</th>
           <td mat-cell *matCellDef="let element">
             {{ element.description }}
           </td>
@@ -31,31 +31,39 @@
         <!-- Action Column -->
 
         <ng-container matColumnDef="date">
-          <th mat-header-cell *matHeaderCellDef>Date</th>
+          <th mat-header-cell *matHeaderCellDef>DATE</th>
           <td mat-cell *matCellDef="let element">{{ element.date }}</td>
         </ng-container>
 
         <ng-container matColumnDef="time">
-          <th mat-header-cell *matHeaderCellDef>Time</th>
+          <th mat-header-cell *matHeaderCellDef>TIME</th>
           <td mat-cell *matCellDef="let element">{{ element.time }}</td>
         </ng-container>
 
         <ng-container matColumnDef="patientInfo">
-          <th mat-header-cell *matHeaderCellDef>Patient Details</th>
+          <th mat-header-cell *matHeaderCellDef>PATIENT DETAILS</th>
           <td mat-cell *matCellDef="let element">{{ element.patient.patientId }}</td>
         </ng-container>
 
         <ng-container matColumnDef="editHistory">
-          <th mat-header-cell *matHeaderCellDef>Patient Name</th>
+          <th mat-header-cell *matHeaderCellDef>PATIENT NAME</th>
           <td mat-cell *matCellDef="let element">{{ element.patient.name }}</td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <ng-container matColumnDef="physicianName">
+          <th mat-header-cell *matHeaderCellDef>PHYSICIAN NAME</th>
+          <td mat-cell *matCellDef="let element">{{ element.employee.firstName }} {{element.employee.lastName}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns" ></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"
+        ></tr>
+        
       </table>
+      <h1>-   -   -</h1>
     </div>
   </mat-tab>
-  <mat-tab label="Notes">
+  <mat-tab label="NOTES">
     <div class="container-fluid mr-top">
       <p-table
         #dt
@@ -86,7 +94,7 @@
           <tr>
             <th scope="col">
               <div class="p-d-flex p-jc-between p-ai-center">
-                Sender Name
+                SENDER NAME
                 <p-columnFilter
                   type="text"
                   field="name"
@@ -96,7 +104,7 @@
             </th>
             <th scope="col">
               <div class="p-d-flex p-jc-between p-ai-center">
-                Sender Designation
+                SENDER DESIGNATION
                 <p-columnFilter
                   type="text"
                   field="id"
@@ -106,12 +114,12 @@
             </th>
             <th scope="col">
               <div class="p-d-flex p-jc-between p-ai-center">
-                Message
+                MESSAGE
               </div>
             </th>
             <th scope="col">
               <div class="p-d-flex p-jc-between p-ai-center">
-                Time
+                TIME
                   <ng-template
                     pTemplate="filter"
                     let-value
@@ -134,7 +142,7 @@
             </th>
             <th>
               <div class="p-d-flex p-jc-between p-ai-center">
-                Action
+                ACTION
               </div>
             </th>
           </tr>
