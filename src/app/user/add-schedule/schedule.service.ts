@@ -9,7 +9,7 @@ import { filter, tap } from 'rxjs/operators';
 })
 export class ScheduleService {
 private apiUrl="http://localhost:8080/user/staff";
-private patientUrl="http://localhost:8080/user/patient";
+private patientUrl="http://localhost:8080/user/patient/details";
 private appoinmentUrl="http://localhost:8080/user/appointment";
 listOfStaff:Employee[]=[];
 listOfPatient:PatientInfo[]=[];

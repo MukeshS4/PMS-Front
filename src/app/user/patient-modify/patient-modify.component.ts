@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+//import * as EventEmitter from 'events';
 import { Table } from 'primeng/table';
 import { userSideNavigationItem } from 'src/app/app-common/data/user.navigation.data';
 import { UserPatientModify, SideNavigationItem } from 'src/app/app-common/models';
@@ -19,6 +20,10 @@ export class PatientModifyComponent implements OnInit {
   displayDialog:boolean=false;
   reason:string="";
   appointment:any;
+  emailId:any;
+
+//   onBeforeHide: EventEmitter | undefined;
+// onAfterHide: EventEmitter | undefined;
   
 
 //start of model attribute definition
@@ -26,7 +31,22 @@ export class PatientModifyComponent implements OnInit {
   constructor(private appointmentService:PatientModifyService,private router:Router) { }
   listOfAppointment: UserPatientModify[]=[];
   ngOnInit(): void {
-    this.listOfAppointment= this.appointmentService.getAllAppointment();
+    if(localStorage.getItem('role')=='Physician')
+    {
+      this.emailId=localStorage.getItem('emailId');
+      this.appointmentService.getAllAppointmentByUserEmailId(this.emailId).subscribe((appointment)=>{
+        this.listOfAppointment.splice(0,this.listOfAppointment.length);
+        this.listOfAppointment.push(...appointment);
+      });
+    }
+    else
+    {
+      this.appointmentService.getAllAppointment()
+      .subscribe((listOfAppointment) => {
+        this.listOfAppointment.splice(0, this.listOfAppointment.length); // Clear array
+        this.listOfAppointment.push(...listOfAppointment); // add new element
+      });;
+    }
   }
   onDelete(appointment:UserPatientModify){
     this.displayDialog=true;
@@ -48,5 +68,10 @@ export class PatientModifyComponent implements OnInit {
   clear(table: Table) {
     table.clear();
   }
+
+  cancel() {
+    this.displayDialog=false;
+}
+
 }
 

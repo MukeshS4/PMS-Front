@@ -35,15 +35,21 @@ export interface Patient {
 
 
 export class PatientInfo {
-    patientId: string;
-    name: string;
-    city:string;
-    country:string;
-    constructor(patientId:string,name:string,city:string,country:string){
-        this.patientId=patientId;
-        this.name=name;
-        this.city=city;
+    id: number;
+    firstName: string;
+    lastName: string;
+    emailId: string;
+    dateOfBirth: string;
+    country:number;
+    contactNumber:number;
+    constructor(id:number,firstName:string,lastName: string,emailId: string,dateOfBirth: string,country:number,contactNumber:number){
+        this.id=id;
+        this.firstName=firstName;
+        this.lastName=lastName;
+        this.emailId=emailId;
+        this.dateOfBirth=dateOfBirth;
         this.country=country;
+        this.contactNumber=contactNumber;
     }
 }
 
@@ -78,15 +84,15 @@ export interface StaffLockedAccounts{
 export class UserPatientModify {
     date: string;
     time: string;
-    appointmentId: number;
-    patient: PatientInfo;
+    appointmentId: string;
+    patientData: PatientInfo;
     description: string;
     employee:Employee;
     status:string;
-    constructor(date:string,time:string,appointmentId:number,patient:PatientInfo,description:string,employee:Employee,status:string){
+    constructor(date:string,time:string,appointmentId:string,patientData:PatientInfo,description:string,employee:Employee,status:string){
         this.date=date;
         this.appointmentId=appointmentId;
-        this.patient=patient;
+        this.patientData=patientData;
         this.description=description;
         this.employee=employee;
         this.status=status;
@@ -97,12 +103,12 @@ export class UserPatientModify {
 export class Appointment {
     date: string;
     time: string;
-    patient: PatientInfo;
+    patientData: PatientInfo;
     description: string;
     employee:Employee;
-    constructor(date:string,time:string,patient:PatientInfo,description:string,employee:Employee){
+    constructor(date:string,time:string,patientData:PatientInfo,description:string,employee:Employee){
         this.date=date;
-        this.patient=patient;
+        this.patientData=patientData;
         this.description=description;
         this.employee=employee;
         this.time=time;
@@ -161,5 +167,16 @@ export class SendNote {
         this.receiverDesignation=receiverDesignation;
         this.priority=priority;
         //this.date=date;
+    }
+}
+
+export class CalendarEventCustom{
+    //id: string;
+    title: string;
+    start: string;
+    constructor(title:string,start:string){
+        this.title=title;
+        //this.id=id;
+        this.start=start;
     }
 }

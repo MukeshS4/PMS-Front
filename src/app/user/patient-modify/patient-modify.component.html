@@ -147,13 +147,13 @@
           <span>{{ data.appointmentId }}</span>
         </td>
         <td>
-          <span>{{ data.patient.patientId }}</span>
+          <span>{{ data.patientData.id }}</span>
         </td>
         <td>
           <span>{{ data.description }}</span>
         </td>
         <td>
-          <span>{{ data.patient.name }}</span>
+          <span>{{ data.patientData.firstName }} {{ data.patientData.lastName }}</span>
         </td>
         <td>
           <button
@@ -184,7 +184,7 @@
     </div>
     <p-footer>
       <button pButton type="button" label="ok" (click)="cancelAppointment(rr)"></button>
-      <button pButton type="button" lable="cancel" 
+      <button pButton type="button"  (click)="cancel()" lable="cancel" 
       class="margin-left-10" >Cancel</button>
     </p-footer>
   </p-dialog>

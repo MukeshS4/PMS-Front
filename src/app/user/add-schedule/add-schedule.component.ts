@@ -104,7 +104,7 @@ export class AddScheduleComponent implements OnInit {
   }
 
   showPatientName(event: any){
-    this.patientName=event.name;
+    this.patientName=event.firstName+" "+event.lastName;
   }
 
 }

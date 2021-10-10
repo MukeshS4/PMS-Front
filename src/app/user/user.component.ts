@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { userSideNavigationItem } from '../app-common/data/user.navigation.data';
-import { SideNavigationItem } from '../app-common/models/navigation.model';
+import { CalendarEventCustom, SideNavigationItem, UserPatientModify } from '../app-common/models/navigation.model';
 import { ChartDataSets } from 'chart.js';
 import { ChartOptions, ChartType } from 'chart.js';
 import { Label } from 'ng2-charts';
@@ -9,6 +9,7 @@ import { CalendarOptions, FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction'; 
 import { PatientModifyService } from './patient-modify.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
@@ -28,7 +29,8 @@ export class UserComponent implements OnInit {
   username:any;
   emailId:any;
   apiChartData:number[]=[];
-
+  cevents:CalendarEventCustom[]=[];
+ 
   handleDateClick(arg: { dateStr: string; }) {
     alert('date click! ' + arg.dateStr)
   }
@@ -36,59 +38,14 @@ export class UserComponent implements OnInit {
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     dateClick: this.handleDateClick.bind(this),
-    events : [{
-      title: 'All Day Event',
-      description: 'description for All Day Event',
-      start: '2021-10-01'
-    },
-    {
-      title: 'Long Event',
-      description: 'description for Long Event',
-      start: '2021-10-07',
-      end: '22021-10-10'
-    },
-    {
-      groupId: '999',
-      title: 'Repeating Event',
-      description: 'description for Repeating Event',
-      start: '2021-10-09T16:00:00'
-    },
-    {
-      groupId: '999',
-      title: 'Repeating Event',
-      description: 'description for Repeating Event',
-      start: '2021-10-16T16:00:00'
-    },
-    {
-      title: 'Conference',
-      description: 'description for Conference',
-      start: '2021-10-11',
-      end: '2021-10-13'
-    },
-    {
-      title: 'Meeting',
-      description: 'description for Meeting',
-      start: '2021-10-12T10:30:00',
-      end: '2021-10-12T12:30:00'
-    },
-    {
-      title: 'Lunch',
-      description: 'description for Lunch',
-      start: '2021-10-12T12:00:00'
-    },
-    {
-      title: 'Meeting',
-      description: 'description for Meeting',
-      start: '2021-10-12T14:30:00'
-    },]
-  
+    events : []
   };
 
   title = 'Codingvila';
   public chart_Options: ChartOptions = {
     responsive: true,
   };
-  public chart_Labels: Label[] = ['Total.A', 'Upcoming.A', 'Canceled.A', 'Completed.A'];
+  public chart_Labels: Label[] = ['Total', 'Upcoming', 'Canceled', 'Completed'];
   public chart_Type: ChartType = 'pie';
   public chart_Legend = true;
   public chart_Plugins = [];
@@ -104,9 +61,9 @@ export class UserComponent implements OnInit {
     }
   ];
 
-  
-  
-  constructor(private route: Router,private appointmentService:PatientModifyService) { 
+  constructor(private route: Router,
+    private appointmentService:PatientModifyService,
+    private formBuilder: FormBuilder) { 
   }
 
   ngOnInit(): void {
@@ -122,7 +79,12 @@ export class UserComponent implements OnInit {
         {
         data: this.apiChartData
       }
-      ]
+      ];
+      this.appointmentService.getAllAppointmentByUserEmailId(this.emailId).subscribe((appointmentList)=>{
+        appointmentList.forEach((appointment) =>{
+          this.cevents.push(new CalendarEventCustom(appointment.appointmentId,appointment.date+"T"+appointment.time+":00"));
+        });
+      })
     }
     else
     {
@@ -134,7 +96,24 @@ export class UserComponent implements OnInit {
         {
         data: this.apiChartData
       }
-      ]
+      ];
+       this.appointmentService.getAllAppointment()
+       .subscribe((appointmentList)=>{
+        appointmentList.forEach((appointment) =>{
+          this.cevents.push(new CalendarEventCustom(appointment.appointmentId,appointment.date+"T"+appointment.time+":00"));
+        });
+      })
     }
+
+    setTimeout(() => {
+      this.calendarOptions = {
+     initialView: 'dayGridMonth',
+     dateClick: this.handleDateClick.bind(this), // bind is important!
+     events: this.cevents
+     };
+   }, 2000);
+
+   console.log(this.cevents);
  }
+
 }

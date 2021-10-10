@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Appointment, Employee, UserPatientModify} from 'src/app/app-common/models';
+import { UserPatientModify} from 'src/app/app-common/models';
 import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,6 @@ export class PatientModifyService {
   appointment:any;
   private apiUrl="http://localhost:8080/user/appointment";
   constructor(private http:HttpClient) {
-    this.findAll;
    }
 
    // Http Options
@@ -24,18 +23,9 @@ export class PatientModifyService {
       })
     }
 
-   findAll(){
-    this.http
-    .get<UserPatientModify[]>(this.apiUrl)
-    .subscribe((listOfAppointment) => {
-      this.listOfAppointment.splice(0, this.listOfAppointment.length); // Clear array
-      this.listOfAppointment.push(...listOfAppointment); // add new element
-    });
+   getAllAppointment(){
+    return this.http.get<UserPatientModify[]>(this.apiUrl);
    }
-   getAllAppointment() {
-     this.findAll();
-    return this.listOfAppointment;
-  }
 
   getAppointmentById(appointmentId:number){
     return this.http.get<UserPatientModify>(this.apiUrl+"/"+appointmentId);
@@ -66,5 +56,10 @@ export class PatientModifyService {
   getAllAppointmentStats()
   {
     return this.http.get<number[]>(this.apiUrl+"/stats")
+  }
+
+  getAllAppointmentByUserEmailId(emailId:string)
+  {
+    return this.http.get<UserPatientModify[]>(this.apiUrl+"/user/"+emailId);
   }
 }

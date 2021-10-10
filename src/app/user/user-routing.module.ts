@@ -12,7 +12,9 @@ const routes: Routes = [
   { path: '', component: UserComponent },
   { path: 'inbox', component: PhysicianInboxComponent },
   { path: 'modifyappointment/addschedule', component: AddScheduleComponent },
+  { path: 'addschedule', component: AddScheduleComponent },
   { path: 'modifyappointment/editschedule/:appointmentId', component: EditScheduleComponent },
+  { path: 'modifyappointment', component: PatientModifyComponent },
   { path: 'modifyappointment', component: PatientModifyComponent },
   { path: 'inbox/sendnotes', component: SendNotesComponent },
 ];

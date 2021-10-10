@@ -1,17 +1,31 @@
-.add{
+/* .add{
     margin-left: 8cm;
 }
 form{
     width: 100%;
-}
-mat-form-field{
-    width: 50%;
-  }
-  h1{
-      margin-left: 11cm;
-  }
+} */
 
+h1{
+padding-left: 10%;
+}
   input.ng-invalid.ng-touched,
   textarea.ng-invalid.ng-touched{
     border: 1px solid red;
+  }
+  mat-form-field{
+    width: 50%;
+    font-size: 16px;
+  color: blue;
+  }
+ 
+  .add{
+    display: flex;
+  flex-direction: column;
+  padding-left: 30%;
+  font-size: 16px;
+  color: blue;
+  border: solid 1px #c0c0ff;
+  }
+  mat-salect{
+    width: 20%;
   }

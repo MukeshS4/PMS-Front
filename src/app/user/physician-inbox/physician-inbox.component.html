@@ -42,12 +42,12 @@
 
         <ng-container matColumnDef="patientInfo">
           <th mat-header-cell *matHeaderCellDef>PATIENT DETAILS</th>
-          <td mat-cell *matCellDef="let element">{{ element.patient.patientId }}</td>
+          <td mat-cell *matCellDef="let element">{{ element.patientData.id }}</td>
         </ng-container>
 
         <ng-container matColumnDef="editHistory">
           <th mat-header-cell *matHeaderCellDef>PATIENT NAME</th>
-          <td mat-cell *matCellDef="let element">{{ element.patient.name }}</td>
+          <td mat-cell *matCellDef="let element">{{ element.patientData.firstName }} {{ element.patientData.lastName }}</td>
         </ng-container>
 
         <ng-container matColumnDef="physicianName">
