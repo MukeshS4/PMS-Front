@@ -1,12 +1,13 @@
 <app-header [navigationitems]="userSideNavigationdata"></app-header>
 
-<div>
-  <h1>Add Appointment Schedule</h1>
-</div>
+
 <form [formGroup]="form" (ngSubmit)="save()">
   <div class="add">
     <div>
-      <mat-form-field appearance="fill">
+      <h1></h1>
+    </div>
+    <div>
+      <mat-form-field appearance="outline">
         <mat-label>Physician Name</mat-label>
         <mat-select formControlName="employee" (selectionChange)="showPhysicianId($event.value)">
           <mat-option
@@ -18,13 +19,13 @@
       </mat-form-field>
     </div>
     <div>
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="outline">
         <mat-label>Physician Id</mat-label>
-        <input matInput value={{physicianId}}/>
+        <input matInput value={{physicianId}} readonly/>
       </mat-form-field>
     </div>
     <div>
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="outline">
         <mat-label>Date</mat-label>
       <input matInput [matDatepicker]="picker" [min]="todayDate"
       placeholder="Choose a date" (dateInput)="appointmentDateSelectEvent($event)">
@@ -33,7 +34,7 @@
     </mat-form-field>
     </div>
     <div>
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="outline">
         <mat-label>Appointment Time Slot</mat-label>
         <mat-select formControlName="time"
         ><mat-option *ngFor="let data of listOfTimeSlot" [value]="data">{{
@@ -44,47 +45,29 @@
     </div>
     <div class="form">
       <div>
-        <h2>Patient Description</h2>
+        <!-- <h2>Patient Description</h2> -->
         <div>
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="outline">
             <mat-label>Patient Id</mat-label>
             <mat-select (selectionChange)="showPatientName($event.value)" formControlName="patient"
             >
-              <!-- <span
-                class="option-danger"
-                *ngIf="
-                  (registerFormControl.patientId.touched || submitted) &&
-                  registerFormControl.patientId.errors?.required
-                "
-              >
-                “Last name cannot be empty.”
-              </span> -->
               <mat-option
                 *ngFor="let data of listOfPatient"
                 [value]="data"
-                >{{ data.patientId }}</mat-option
+                >{{ data.id }}</mat-option
               >
             </mat-select>
           </mat-form-field>
         </div>
 
         <div>
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="outline">
             <mat-label>Patient Name</mat-label>
-            <input matInput value={{patientName}}/>
-              <!-- <span
-                class="text-danger"
-                *ngIf="
-                  (registerFormControl.patientName.touched || submitted) &&
-                  registerFormControl.patientName.errors?.required
-                "
-              >
-                “Last name cannot be empty.”
-              </span> -->
+            <input matInput value={{patientName}} readonly/>
           </mat-form-field>
         </div>
         <div>
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="outline">
             <mat-label>Descriptive Info</mat-label>
               <textarea matInput formControlName="description"></textarea>
             
@@ -93,7 +76,7 @@
       </div>
 
       <div>
-        <button mat-raised-button color="primary" [disabled]="false">Save</button>
+        <button mat-raised-button color="primary" [disabled]="false" style="margin-bottom: 2%;">Save</button>
       </div>
     </div>
   </div>

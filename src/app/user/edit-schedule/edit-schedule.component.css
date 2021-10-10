@@ -1,16 +1,20 @@
 
-form{
+/* form{
     margin-left: 25%;
     margin-right:25%;
     width: 70%;
-}
+} */
 mat-form-field{
     width: 50%;
+    font-size: 16px;
+  color: blue;
   }
-  h1{
-    margin-left: 5%;
-    margin-right:54%;
-    margin-top: 3%;
-    text-size-adjust: 24;
-    background-color: darkgray;
+ 
+  .add{
+    display: flex;
+  flex-direction: column;
+  padding-left: 30%;
+  font-size: 16px;
+  color: blue;
+  border: solid 1px #c0c0ff;
   }

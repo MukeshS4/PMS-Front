@@ -28,7 +28,7 @@ export class NotesService {
 
     
   findAllStaffByRole(role:string):void{
-    this.http.get<Employee[]>(this.staffUrl+"/role/${role}")
+    this.http.get<Employee[]>(this.staffUrl+"/role/"+role)
     .subscribe((employee)=>{
       this.listOfStaff.splice(0,this.listOfStaff.length);
       this.listOfStaff.push(...employee);

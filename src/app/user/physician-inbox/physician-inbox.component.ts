@@ -4,73 +4,8 @@ import { MatTable } from '@angular/material/table';
 import { notes } from 'src/app/app-common/data/notes.list';
 import { userSideNavigationItem } from 'src/app/app-common/data/user.navigation.data';
 import { NotesList, SideNavigationItem, UserPatientModify } from 'src/app/app-common/models/navigation.model';
+import { PatientModifyService } from '../patient-modify.service';
 import { InboxService } from './inbox.service';
-
-
-
-// export interface UsersData {
-//   appointmentId: string;
-//   appointmentDescription: string;
-//   date: string;
-//   time: string;
-//   patientInfo: string;
-//   editHistory: string;
-// }
-
-// const ELEMENT_DATA: UserPatientModify[] = [
-//   {
-//     appointmentId: 1,
-//     patient: { patientId: '1', name: 'Rekha', city: 'Noida', country: 'India' },
-//     description: 'headache and body pain',
-//     date: '1999-09-14',
-//     time: '23:10:45',
-//     employee: {
-//       title: 'dr',
-//       firstName: 'mukesh',
-//       lastName: 'singh',
-//       emailId: 'muesh@gmail.com',
-//       dateOfBirth: '2021-09-14',
-//       role: 'physician',
-//       employeeId: 'E01',
-//     },
-//     status: 'SCHEDULED',
-//   },
-//   {
-//     appointmentId: 2,
-//     patient: { patientId: '1', name: 'Rekha', city: 'Noida', country: 'India' },
-//     description: 'headache and body pain',
-//     date: '1999-09-14',
-//     time: '23:10:45',
-//     employee: {
-//       title: 'dr',
-//       firstName: 'mukesh',
-//       lastName: 'singh',
-//       emailId: 'muesh@gmail.com',
-//       dateOfBirth: '2021-09-14',
-//       role: 'physician',
-//       employeeId: 'E01',
-//     },
-//     status: 'SCHEDULED',
-//   },
-//   {
-//     appointmentId: 3,
-//     patient: { patientId: '1', name: 'Rekha', city: 'Noida', country: 'India' },
-//     description: 'headache and body pain',
-//     date: '1999-09-14',
-//     time: '23:10:45',
-//     employee: {
-//       title: 'dr',
-//       firstName: 'mukesh',
-//       lastName: 'singh',
-//       emailId: 'muesh@gmail.com',
-//       dateOfBirth: '2021-09-14',
-//       role: 'physician',
-//       employeeId: 'E01',
-//     },
-//     status: 'SCHEDULED',
-//   }
-// ];
-
 @Component({
   selector: 'app-physician-inbox',
   templateUrl: './physician-inbox.component.html',
@@ -91,17 +26,25 @@ export class PhysicianInboxComponent implements OnInit {
   notes: NotesList[] = notes;
   statuses:any;
   loading: boolean=true;
-
-  constructor(private inboxService:InboxService) { }
+  emailId:any;
   dataSource:UserPatientModify[]=[];
 
+  constructor(private inboxService:InboxService,private appointmentService:PatientModifyService) { }
+  
   ngOnInit(): void {
     this.notes=this.inboxService.getAllNotes();
-    this.dataSource=this.inboxService.getAllUpcomingAppointment();
-    //this.dataSource=ELEMENT_DATA;
-    console.log(this.dataSource);
-     // this.userData= this.userData;
-     this.statuses = [
+    if(localStorage.getItem('role')=='Physician'){
+      this.emailId=localStorage.getItem('emailId');
+      this.appointmentService.getAllAppointmentByUserEmailId(this.emailId).subscribe((appointment)=>{
+        this.dataSource.splice(0,this.dataSource.length);
+        this.dataSource.push(...appointment);
+      });
+    }
+    else
+    {
+      this.dataSource=this.inboxService.getAllUpcomingAppointment();
+    }
+    this.statuses = [
       { label: 'Active', value: 'Active' },
       { label: 'Inactive', value: 'Inactive' },
       { label: 'Blocked', value: 'Blocked' },

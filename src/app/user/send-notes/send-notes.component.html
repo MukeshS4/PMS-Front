@@ -8,15 +8,6 @@
       <mat-form-field appearance="fill">
         <mat-label>Reciver Id</mat-label>
         <mat-select  formControlName="receiverId" (selectionChange)="showData($event.value)">
-          <!-- <span
-            class="text-danger"
-            *ngIf="
-              (registerFormControl.receiverId.touched || submitted) &&
-              registerFormControl.receiverId.errors?.required
-            "
-          >
-            “Last name cannot be empty.”
-          </span>  -->
           <mat-option
             *ngFor="let data of listOfReceiver"
             [value]="data"
@@ -29,15 +20,6 @@
       <mat-form-field appearance="fill">
         <mat-label>Reciver Name</mat-label>
         <!-- <mat-select  formControlName="receiverName">
-        <span
-            class="text-danger"
-            *ngIf="
-              (registerFormControl.receiverName.touched || submitted) &&
-              registerFormControl.receiverName.errors?.required
-            "
-          >
-            “Name cannot be empty.”
-          </span> 
         </mat-select> -->
         <input matInput value={{receiverName}} formControlName="receiverName"/>
       </mat-form-field>
@@ -46,15 +28,6 @@
       <mat-form-field appearance="fill">
         <mat-label>Receiver Designation</mat-label>
         <!-- <mat-select  formControlName="receiverDesignation">
-          <span
-              class="text-danger"
-              *ngIf="
-                (registerFormControl.receiverDesignation || submitted) &&
-                registerFormControl.receiverDesignation.errors?.required
-              "
-            >
-              “Name cannot be empty.”
-            </span> 
           </mat-select> -->
         <input matInput value={{receiverDesignation}} formControlName="receiverDesignation"/>
       </mat-form-field>
@@ -62,16 +35,7 @@
     <div>
       <mat-form-field appearance="fill">
         <mat-label>Message</mat-label>
-        <!-- <mat-select  formControlName="message">
-          <span
-              class="text-danger"
-              *ngIf="
-                (registerFormControl.message || submitted) &&
-                registerFormControl.message.errors?.required
-              "
-            >
-              “Name cannot be empty.”
-            </span> 
+        <!-- <mat-select  formControlName="message"> 
           </mat-select> -->
         <textarea matInput formControlName="message"></textarea>
         
