@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { userSideNavigationItem } from 'src/app/app-common/data/user.navigation.data';
@@ -7,6 +7,11 @@ import { PatientModifyService } from '../patient-modify.service';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {formatDate } from '@angular/common';
 import { ScheduleService } from '../add-schedule/schedule.service';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+
+export interface DialogData {
+  appointmentId: string;
+}
 
 @Component({
   selector: 'app-edit-schedule',
@@ -17,7 +22,7 @@ export class EditScheduleComponent implements OnInit {
 
   userSideNavigationdata : SideNavigationItem[] = userSideNavigationItem;
   appointmentDate: Date = new Date();
-  appointmentId:number=0;
+  appointmentId:string="";
   todayNumber: number = Date.now();
   todayDate : Date = new Date();
   todayString : string = new Date().toDateString();
@@ -32,16 +37,20 @@ export class EditScheduleComponent implements OnInit {
 
   
 
-  constructor(private router:Router,private route:ActivatedRoute,
+  constructor(private router:Router,
     private appointmentService:PatientModifyService,
-    private userService:ScheduleService) { }
+    private userService:ScheduleService,@Inject(MAT_DIALOG_DATA) public data: DialogData,
+    public dialogRef: MatDialogRef<EditScheduleComponent>) { }
 
   ngOnInit() {
-    console.log("in edit schedule");
-    
-    this.route.params.subscribe((params:Params)=>{
-      this.appointmentId=params['appointmentId'];
-    });
+    // console.log("in edit schedule");
+    // console.log(this.data.appointmentId);
+    // this.route.params.subscribe((params:Params)=>{
+    //   this.appointmentId=params['appointmentId'];
+    // });
+    // if(this.appointmentId==undefined)
+    this.appointmentId=this.data.appointmentId;
+    //console.log(this.appointmentId);
     this.appointmentService.getAppointmentById(this.appointmentId).subscribe((data:UserPatientModify)=>{
       this.appointment=data;
     });
@@ -81,7 +90,8 @@ export class EditScheduleComponent implements OnInit {
     this.appointment=new UserPatientModify(this.todayString,this.form.controls.time.value,this.appointment.appointmentId,this.appointment.patient,this.form.controls.description.value,this.form.controls.employee.value,"Scheduled");
     this.appointmentService.updateAppointment(this.appointment).subscribe((data) => {      
     });
-    this.router.navigateByUrl('/user/modifyappointment');
+    this.dialogRef.close();
+    //this.router.navigateByUrl('/user/modifyappointment');
   }
 
 }

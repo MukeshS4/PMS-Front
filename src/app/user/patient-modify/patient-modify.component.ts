@@ -1,10 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-//import * as EventEmitter from 'events';
+import {MatDialog} from '@angular/material/dialog';
 import { Table } from 'primeng/table';
 import { userSideNavigationItem } from 'src/app/app-common/data/user.navigation.data';
 import { UserPatientModify, SideNavigationItem } from 'src/app/app-common/models';
 import {PatientModifyService} from 'src/app/user/patient-modify.service';
+import { AddScheduleComponent } from '../add-schedule/add-schedule.component';
+import { EditScheduleComponent } from '../edit-schedule/edit-schedule.component';
 
 @Component({
   selector: 'app-patient-modify',
@@ -28,7 +30,7 @@ export class PatientModifyComponent implements OnInit {
 
 //start of model attribute definition
 
-  constructor(private appointmentService:PatientModifyService,private router:Router) { }
+  constructor(private appointmentService:PatientModifyService,private router:Router,public dialog: MatDialog) { }
   listOfAppointment: UserPatientModify[]=[];
   ngOnInit(): void {
     if(localStorage.getItem('role')=='Physician')
@@ -45,9 +47,18 @@ export class PatientModifyComponent implements OnInit {
       .subscribe((listOfAppointment) => {
         this.listOfAppointment.splice(0, this.listOfAppointment.length); // Clear array
         this.listOfAppointment.push(...listOfAppointment); // add new element
-      });;
+      });
     }
   }
+
+  addAppointment()
+  {
+    this.dialog.open(AddScheduleComponent, {
+      height: '600px',
+      width: '700px',
+    });
+  }
+
   onDelete(appointment:UserPatientModify){
     this.displayDialog=true;
     this.appointment=appointment;
@@ -63,7 +74,11 @@ export class PatientModifyComponent implements OnInit {
   }
 
   onEdit(appointment:UserPatientModify){
-    this.router.navigate(['user/modifyappointment/editschedule',appointment.appointmentId]);
+    this.dialog.open(EditScheduleComponent, {
+      height: '600px',
+      width: '700px',
+      data: {appointmentId:appointment.appointmentId}
+    });
   }
   clear(table: Table) {
     table.clear();

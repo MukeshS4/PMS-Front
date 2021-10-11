@@ -27,7 +27,7 @@ export class PatientModifyService {
     return this.http.get<UserPatientModify[]>(this.apiUrl);
    }
 
-  getAppointmentById(appointmentId:number){
+  getAppointmentById(appointmentId:string){
     return this.http.get<UserPatientModify>(this.apiUrl+"/"+appointmentId);
   }
   findAllSlotByDate(date:string,empId:string):void{

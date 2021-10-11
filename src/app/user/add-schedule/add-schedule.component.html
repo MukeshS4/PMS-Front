@@ -1,4 +1,4 @@
-<app-header [navigationitems]="userSideNavigationdata"></app-header>
+<!-- <app-header [navigationitems]="userSideNavigationdata"></app-header> -->
 
 
 <form [formGroup]="form" (ngSubmit)="save()">
@@ -6,7 +6,7 @@
     <div>
       <h1></h1>
     </div>
-    <div>
+    <div style="margin-left: 2%; margin-right: 2%; ">
       <mat-form-field appearance="outline">
         <mat-label>Physician Name</mat-label>
         <mat-select formControlName="employee" (selectionChange)="showPhysicianId($event.value)">
@@ -17,14 +17,14 @@
           >
         </mat-select>
       </mat-form-field>
-    </div>
-    <div>
+    <!-- </div>
+    <div> -->
       <mat-form-field appearance="outline">
         <mat-label>Physician Id</mat-label>
         <input matInput value={{physicianId}} readonly/>
       </mat-form-field>
     </div>
-    <div>
+    <div style="margin-left: 2%; margin-right: 2%; ">
       <mat-form-field appearance="outline">
         <mat-label>Date</mat-label>
       <input matInput [matDatepicker]="picker" [min]="todayDate"
@@ -32,8 +32,8 @@
       <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
-    </div>
-    <div>
+    <!-- </div>
+    <div> -->
       <mat-form-field appearance="outline">
         <mat-label>Appointment Time Slot</mat-label>
         <mat-select formControlName="time"
@@ -46,11 +46,10 @@
     <div class="form">
       <div>
         <!-- <h2>Patient Description</h2> -->
-        <div>
+        <div style="margin-left: 2%; margin-right: 2%; ">
           <mat-form-field appearance="outline">
             <mat-label>Patient Id</mat-label>
-            <mat-select (selectionChange)="showPatientName($event.value)" formControlName="patient"
-            >
+            <mat-select (selectionChange)="showPatientName($event.value)" formControlName="patient">
               <mat-option
                 *ngFor="let data of listOfPatient"
                 [value]="data"
@@ -58,15 +57,15 @@
               >
             </mat-select>
           </mat-form-field>
-        </div>
+        <!-- </div>
 
-        <div>
-          <mat-form-field appearance="outline">
+        <div> -->
+          <mat-form-field appearance="outline" >
             <mat-label>Patient Name</mat-label>
             <input matInput value={{patientName}} readonly/>
           </mat-form-field>
         </div>
-        <div>
+        <div class="discription">
           <mat-form-field appearance="outline">
             <mat-label>Descriptive Info</mat-label>
               <textarea matInput formControlName="description"></textarea>
@@ -76,10 +75,14 @@
       </div>
 
       <div>
-        <button mat-raised-button color="primary" [disabled]="false" style="margin-bottom: 2%;">Save</button>
+        <mat-dialog-actions align="end">
+          <button mat-button matDialogClose="no" style="margin-bottom: 5%; background-color: crimson; color: white;">Cancel</button>
+          <button mat-raised-button color="primary" [disabled]="false" style="margin-bottom: 5%;" cdkFocusInitial>Save</button>
+      </mat-dialog-actions>
+        
       </div>
     </div>
   </div>
 </form>
 
-<app-footer></app-footer>
+<!-- <app-footer></app-footer> -->

@@ -10,6 +10,9 @@ import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction'; 
 import { PatientModifyService } from './patient-modify.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AddScheduleComponent } from './add-schedule/add-schedule.component';
+import {MatDialog} from '@angular/material/dialog';
+import { EditScheduleComponent } from './edit-schedule/edit-schedule.component';
 
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
@@ -32,13 +35,26 @@ export class UserComponent implements OnInit {
   cevents:CalendarEventCustom[]=[];
  
   handleDateClick(arg: { dateStr: string; }) {
-    alert('date click! ' + arg.dateStr)
+    //alert('date click! ' + arg.dateStr);
+    this.dialog.open(AddScheduleComponent, {
+      height: '520px',
+      width: '400px',
+    });
   }
  
+  handleEventClick(arg:any){
+    this.dialog.open(EditScheduleComponent, {
+      height: '600px',
+      width: '700px',
+      data: {appointmentId:arg.event.title}
+    });
+  }
+
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     dateClick: this.handleDateClick.bind(this),
-    events : []
+    events : [],
+    eventClick: this.handleEventClick.bind(this)
   };
 
   title = 'Codingvila';
@@ -63,7 +79,8 @@ export class UserComponent implements OnInit {
 
   constructor(private route: Router,
     private appointmentService:PatientModifyService,
-    private formBuilder: FormBuilder) { 
+    private formBuilder: FormBuilder,
+    public dialog: MatDialog) { 
   }
 
   ngOnInit(): void {
@@ -109,7 +126,8 @@ export class UserComponent implements OnInit {
       this.calendarOptions = {
      initialView: 'dayGridMonth',
      dateClick: this.handleDateClick.bind(this), // bind is important!
-     events: this.cevents
+     events: this.cevents,
+     eventClick: this.handleEventClick.bind(this)
      };
    }, 2000);
 

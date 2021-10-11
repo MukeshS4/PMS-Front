@@ -1,7 +1,6 @@
 import { ViewChild } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { MatTable } from '@angular/material/table';
-import { notes } from 'src/app/app-common/data/notes.list';
 import { userSideNavigationItem } from 'src/app/app-common/data/user.navigation.data';
 import { NotesList, SideNavigationItem, UserPatientModify } from 'src/app/app-common/models/navigation.model';
 import { PatientModifyService } from '../patient-modify.service';
@@ -23,33 +22,36 @@ export class PhysicianInboxComponent implements OnInit {
   @ViewChild(MatTable, { static: true })
   table: MatTable<any> | undefined 
 
-  notes: NotesList[] = notes;
+  notes: NotesList[] = [];
   statuses:any;
-  loading: boolean=true;
+  loading: boolean=false;
   emailId:any;
   dataSource:UserPatientModify[]=[];
 
   constructor(private inboxService:InboxService,private appointmentService:PatientModifyService) { }
   
-  ngOnInit(): void {
-    this.notes=this.inboxService.getAllNotes();
+  ngOnInit() {
+    
     if(localStorage.getItem('role')=='Physician'){
       this.emailId=localStorage.getItem('emailId');
       this.appointmentService.getAllAppointmentByUserEmailId(this.emailId).subscribe((appointment)=>{
         this.dataSource.splice(0,this.dataSource.length);
         this.dataSource.push(...appointment);
       });
+      console.log(this.dataSource);
     }
     else
     {
       this.dataSource=this.inboxService.getAllUpcomingAppointment();
+      console.log(this.dataSource);
     }
-    this.statuses = [
-      { label: 'Active', value: 'Active' },
-      { label: 'Inactive', value: 'Inactive' },
-      { label: 'Blocked', value: 'Blocked' },
-      this.loading=false,
-    ]
+    // this.statuses = [
+    //   { label: 'Active', value: 'Active' },
+    //   { label: 'Inactive', value: 'Inactive' },
+    //   { label: 'Blocked', value: 'Blocked' },
+    //   this.loading=false,
+    // ]
+    this.notes=this.inboxService.getAllNotes();
   }
 editProduct() {
   console.log("hii");

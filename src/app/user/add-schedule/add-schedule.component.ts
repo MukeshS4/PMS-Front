@@ -6,6 +6,7 @@ import {MatDatepickerInputEvent,MatDatepicker} from '@angular/material/datepicke
 import {formatDate } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-schedule',
@@ -50,7 +51,8 @@ export class AddScheduleComponent implements OnInit {
     }
   } 
   constructor(private scheduleService:ScheduleService,
-    private router: Router, private formBuilder: FormBuilder
+    private router: Router, private formBuilder: FormBuilder,
+    public dialogRef: MatDialogRef<AddScheduleComponent>
               ) { }
 
   ngOnInit(): void {
@@ -90,13 +92,14 @@ export class AddScheduleComponent implements OnInit {
     
     if(this.form.valid){
       
-    alert('Appointment Added Successfully');
+    //alert('Appointment Added Successfully');
     //this.router.navigateByUrl('/user/modifyappointment');
+    this.dialogRef.close();
     }
     else{
       alert('Please Fill All The Fields')
     }
-    this.router.navigateByUrl('/user/modifyappointment');
+    //this.router.navigateByUrl('/user/modifyappointment');
   }
 
   showPhysicianId(event: any){

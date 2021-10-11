@@ -13,8 +13,13 @@ mat-form-field{
   .add{
     display: flex;
   flex-direction: column;
-  padding-left: 30%;
+  padding-left: 0%;
   font-size: 16px;
   color: blue;
   border: solid 1px #c0c0ff;
+  }
+
+  .discription{
+    margin-left: 10%;
+    width: 150%;
   }
